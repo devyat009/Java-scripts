@@ -1,6 +1,10 @@
-import java.util.Scanner;
+// Calculadora basica em terminal, com operações de soma, subtração, multiplicação, divisão, potenciação, raiz quadrada e cubica.
+// Autor: Higor Stanley aka Devyat009
+// Data de criação: 16/05/2024
+// Data de atualização: 
 
-public class Main {
+import java.util.Scanner;
+public class SimpleCalculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         // Variaveis:
