@@ -13,13 +13,18 @@
 import java.util.Scanner;
 public class SimpleCalculator {
     public static void main(String[] args) {
+        // |PT-BR| Titulo do programa:
+        // |EN| Title of the program:
+        System.out.println("Calculadora simples em terminal feita por Higor Stanley aka Devyat009");
+        // |PT-BR| Cria um objeto Scanner para ler a entrada do usuário
+        // |EN| Creates a Scanner object to read user input
         Scanner scanner = new Scanner(System.in);
-        // |PT-BR| Variaveis:
-        // |EN| Vaiables:
+        // |PT-BR| Variáveis:
+        // |EN| Variables:
         float resultado = 0;
         // |PT-BR| Inserir o primeiro valor:
         // |EN| Insert the first value:
-        System.out.println("Insira o primeiro valor: ");
+        System.out.println("Insira o PRIMEIRO valor: ");
         while (!scanner.hasNextFloat()) {
             System.out.println("Por favor insira numeros: ");
             scanner.next();
@@ -27,7 +32,7 @@ public class SimpleCalculator {
         float numero_1 = scanner.nextFloat();
         // |PT-BR| Inserir o segundo valor:
         // |EN| Insert the second value:
-        System.out.println("Insira o segundo valor: ");
+        System.out.println("Insira o SEGUNDA valor: ");
         while (!scanner.hasNextFloat()) {
             System.out.println("Por favor insira numeros: ");
             scanner.next();
@@ -46,9 +51,16 @@ public class SimpleCalculator {
         System.out.println("7 - Raiz Cúbica");
         System.out.println("8 - Sair");
         System.out.print("Operação: ");
+        // |PT-BR| Loop para verificar se a opção selecionada é válida:
+        // |EN| Loop to check if the selected option is valid:
+        // Algo de errado aqui, não sei o que, incapaz de detectar letras, crash no terminal
+        while (!scanner.hasNextInt()) {
+            System.out.println("Insira uma opção válida: ");
+            scanner.next(); // consume the invalid input
+        }
         int operacao = scanner.nextInt();
-        // |PT-BR| Inserir o operador:
-        // |EN| Insert the operator:
+        // |PT-BR| Operações matemáticas com a resposta do programa:
+        // |EN| Mathematical operations with the answer of the program:
         switch (operacao) {
             // |PT-BR| Opção 1: Soma
             // |EN| Option 1: Addition   
