@@ -1,5 +1,9 @@
 {
     "java.dependency.packagePresentation": "hierarchical",
     "java.debug.settings.onBuildFailureProceed": true,
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.project.sourcePaths": [
+        "Java - Interfaces\\Inventory System"
+    ],
+    "java.project.referencedLibraries": []
 }

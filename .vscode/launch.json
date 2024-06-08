@@ -6,11 +6,23 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launcher",
+            "request": "launch",
+            "mainClass": "com.devyat.inventorysystem.Launcher",
+            "projectName": "demo"
+        },
+        {
+            "type": "java",
+            "name": "Launcher",
+            "request": "launch",
+            "mainClass": "com.devyat.inventorysystem.Launcher",
+            "projectName": "Inventory System"
+        },
+        {
+            "type": "java",
             "name": "Launch Java Program",
             "request": "launch",
             "mainClass": ""
         }
-    
-
     ]
 }

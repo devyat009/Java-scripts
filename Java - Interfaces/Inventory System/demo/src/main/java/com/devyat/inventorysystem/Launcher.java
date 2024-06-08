@@ -6,6 +6,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import com.devyat.inventorysystem.uxElements.*;
 import com.devyat.inventorysystem.res.*;
@@ -39,6 +41,24 @@ public class Launcher {
         uiLoginPainel.setPreferredSize(new Dimension(340, 410));
 
 
+        SwingUtilities.invokeLater(() -> {
+            try {
+                BufferedImage svgImage = SVGUtils.loadSVG(SVGUtils.SVGPaths.EXAMPLE, 200, 200);
+
+                JPanel panel = new JPanel() {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(svgImage, 0, 0, this);
+                    }
+                };
+
+                uiBackground.add(panel);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    
         
         
         /*
