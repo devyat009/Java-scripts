@@ -6,23 +6,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
+            "name": "Launch Java Program",
             "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "ProgramLauncher",
-            "request": "launch",
-            "mainClass": "ProgramLauncher",
-            "projectName": "Java-scripts_770a15af"
-        },
-        {
-            "type": "java",
-            "name": "SimpleCalculator",
-            "request": "launch",
-            "mainClass": "SimpleCalculator",
-            "projectName": "Java-scripts_770a15af"
+            "mainClass": ""
         }
+    
+
     ]
 }

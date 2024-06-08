@@ -1,3 +1,4 @@
+package src.com.devyat.inventorysystemgui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-import res.ConsoleColors;
+import src.com.devyat.inventorysystemgui.res.ConsoleColors;
 
 
 
@@ -36,7 +36,7 @@ public class MainWindow extends JFrame {
     }
     public void initialize(){
         try{
-            Font customFont1 = CustomFontLoader.loadCustomFont1(24);
+            Font kohoBold = CustomFontLoader.loadCustomFont1(24);
 
         window = new JFrame(); // The window itself
         window.setTitle("Hello World!"); // Windown title bar
@@ -116,7 +116,7 @@ public class MainWindow extends JFrame {
 
         projectTitle = new JLabel("  PROJECT"); // JLabel nome_função* = new JLabel("TEXTO")
         projectTitle.setForeground(ConsoleColors.white); // Setting the text color
-        projectTitle.setFont(customFont1); // 
+        projectTitle.setFont(kohoBold); // 
         uiLeftMenu.add(projectTitle, BorderLayout.EAST);
 
         // <!-- Invisible Button -->
@@ -126,7 +126,7 @@ public class MainWindow extends JFrame {
         buttonBlank.setEnabled(false); // Disable the button
         // <!-- First Row Button -->
         HoverButton button1 = new HoverButton("btn test 0"); // JButton Title  
-        button1.setFont(customFont1);
+        button1.setFont(kohoBold);
         uiLeftMenu.add(button1, BorderLayout.CENTER); // Add JButton and position
         button1.setBorder(BorderFactory.createEmptyBorder()); //Set an empty border for the JButon.
         button1.setBackgroundAndForeground(ConsoleColors.darkjunglegreen, ConsoleColors.white);
@@ -136,7 +136,7 @@ public class MainWindow extends JFrame {
 
         // <!-- Second Row Button -->
         HoverButton button2 = new HoverButton("btn test 1");
-        button2.setFont(customFont1);
+        button2.setFont(kohoBold);
         uiLeftMenu.add(button2);
         button2.setBackgroundAndForeground(ConsoleColors.darkjunglegreen, ConsoleColors.white);
         button2.setBorder(BorderFactory.createEmptyBorder());
@@ -146,7 +146,7 @@ public class MainWindow extends JFrame {
 
         // <!-- Third Row Button -->
         HoverButton button3 = new HoverButton("btn test 2");
-        button3.setFont(customFont1);
+        button3.setFont(kohoBold);
         uiLeftMenu.add(button3);
         button3.setBackgroundAndForeground(ConsoleColors.darkjunglegreen, ConsoleColors.white);
         button3.setBorder(BorderFactory.createEmptyBorder());
@@ -204,14 +204,14 @@ public class MainWindow extends JFrame {
 
 
         JButton[] buttons = {minimizeButton, maximizeButton, closeButton};
-        for (JButton button : buttons) {
+        //for (JButton button : buttons) {
             //button.setFocusPainted(false);
             //button.setForeground(Color.WHITE);
             //button.setPreferredSize(new Dimension(40, 30));
             //button.setBorder(BorderFactory.createEmptyBorder());
             //button.setContentAreaFilled(false);
             //closeButton.setPressedBackgroundColor(ConsoleColors.testred);
-        }
+        //}
         
 
         // Add buttons to a panel with FlowLayout.RIGHT

@@ -1,4 +1,4 @@
-package res;
+package src.com.devyat.inventorysystemgui.res;
 import java.awt.Color;
 
 public class ConsoleColors {
@@ -13,5 +13,6 @@ public class ConsoleColors {
     public static final Color lightpink = new Color(233, 113, 109); // Light Carmine Pink
     public static final Color silver = new Color(166, 166, 166); //quicksilver
     public static final Color dgray = new Color(89, 89, 89); // Davy's Gray //discard
+    public static final Color transparent = new Color(0, 0, 0, 0); // Transparent Color
 
 }
