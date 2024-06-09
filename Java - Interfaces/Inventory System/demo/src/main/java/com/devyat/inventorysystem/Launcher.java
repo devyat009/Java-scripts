@@ -1,13 +1,13 @@
 package com.devyat.inventorysystem;
 
 import javax.swing.*;
-import javax.swing.border.Border;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+
 
 import com.devyat.inventorysystem.uxElements.*;
 import com.devyat.inventorysystem.res.*;
@@ -24,7 +24,7 @@ public class Launcher {
          */
         window = new JFrame("Login");
         window.setSize(1000, 600);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
 
         /*
