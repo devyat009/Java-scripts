@@ -38,6 +38,17 @@ import org.w3c.dom.svg.SVGDocument;
  *  - Auto Recenter
  *  - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
  */
+/*
+ *  SVGUtils is class for customizing and adding svg files
+ *    @devyat009
+ *    @version 1.0
+ *    @since 1.0
+ *  - Indenpendent Resize in X and Y axis
+ *  - Indenpendent Fill and Stroke color
+ *  - Custom Stroke Thickness 
+ *  - Auto Recenter
+ *  - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
+ */
 public class SVGUtils {
 
     // Caminhos para os arquivos SVG
@@ -142,6 +153,7 @@ public class SVGUtils {
             // Cria uma janela Swing
             JFrame frame = new JFrame("QUACK 𓅭 QUACK");
             frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             frame.setSize(800, 400); // Aumentar o tamanho da janela para acomodar ambos os painéis
 
             // Cria um JPanel para o fundo com layout de grid
@@ -219,6 +231,7 @@ public class SVGUtils {
                         double scaleX = 2.0f; // Ajusta a escala horizontal do SVG
                         double scaleY = 2.0f; // Ajusta a escala vertical do SVG
                         
+                        SVGUtils.paintCenteredSVG(g2d, svgNodeLogin, scaleX, scaleY, size.width, size.height);
                         SVGUtils.paintCenteredSVG(g2d, svgNodeLogin, scaleX, scaleY, size.width, size.height);
                         g2d.dispose();
                     }
