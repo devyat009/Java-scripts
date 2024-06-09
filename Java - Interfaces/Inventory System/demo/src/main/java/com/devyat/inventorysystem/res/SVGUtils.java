@@ -1,15 +1,43 @@
 package com.devyat.inventorysystem.res;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
-import org.apache.batik.anim.dom.*;
-import org.apache.batik.bridge.*;
-import org.apache.batik.gvt.*;
-import org.apache.batik.util.*;
-import org.w3c.dom.*;
-import org.w3c.dom.svg.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
+import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.UserAgentAdapter;
+import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.util.XMLResourceDescriptor;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.svg.SVGDocument;
+
+/*
+ *  SVGUtils is class for customizing and adding svg files
+ *    @devyat009
+ *    @version 1.0
+ *    @since 1.0
+ *  - Indenpendent Resize in X and Y axis
+ *  - Indenpendent Fill and Stroke color
+ *  - Custom Stroke Thickness 
+ *  - Auto Recenter
+ *  - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
+ */
 public class SVGUtils {
 
     // Caminhos para os arquivos SVG
@@ -80,12 +108,40 @@ public class SVGUtils {
             }
         }
     }
+    /*
+     * Method to draw the SVG always in the center of a JPanel.
+     */
+    public static void paintCenteredSVG(Graphics2D g2d, GraphicsNode svgNode, double scaleX, double scaleY, int panelWidth, int panelHeight) {
+        // Obtém as dimensões originais do SVG sem escala
+        double svgWidth = svgNode.getPrimitiveBounds().getWidth();
+        double svgHeight = svgNode.getPrimitiveBounds().getHeight();
 
+        // Calcula o centro do SVG (no sistema de coordenadas do SVG)
+        double svgCenterX = svgWidth / 2.0;
+        double svgCenterY = svgHeight / 2.0;
+
+        // Calcula o centro do painel
+        double panelCenterX = panelWidth / 2.0;
+        double panelCenterY = panelHeight / 2.0;
+
+        // Calcula as coordenadas para centralizar o centro do SVG no centro do painel
+        double translateX = panelCenterX - svgCenterX * scaleX;
+        double translateY = panelCenterY - svgCenterY * scaleY;
+
+        // Aplica a translação e escala
+        g2d.translate(translateX, translateY); // Ajusta a posição considerando a escala
+        g2d.scale(scaleX, scaleY); // Aplica a escala antes de desenhar
+        svgNode.paint(g2d); // Desenha o SVG
+    }
+
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             // Cria uma janela Swing
             JFrame frame = new JFrame("QUACK 𓅭 QUACK");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             frame.setSize(800, 400); // Aumentar o tamanho da janela para acomodar ambos os painéis
 
             // Cria um JPanel para o fundo com layout de grid
@@ -105,7 +161,6 @@ public class SVGUtils {
                         Graphics2D g2d = (Graphics2D) g.create();
                         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                         // Calcula a escala para ajustar o SVG ao tamanho do painel
-                        Dimension size = getSize();
                         float scaleX = 0.4f; // Ajusta a escala horizontal
                         float scaleY = 0.4f; // Ajusta a escala vertical
                         g2d.scale(scaleX, scaleY);
@@ -132,7 +187,6 @@ public class SVGUtils {
                         Graphics2D g2d = (Graphics2D) g.create();
                         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                         // Calcula a escala para ajustar o SVG ao tamanho do painel
-                        Dimension size = getSize();
                         float scaleX = 2.0f; // Ajusta a escala horizontal
                         float scaleY = 2.0f; // Ajusta a escala vertical
                         g2d.scale(scaleX, scaleY);
@@ -160,58 +214,13 @@ public class SVGUtils {
                         
                         // Calcula a escala para ajustar o SVG ao tamanho do painel
                         Dimension size = getSize();
-                        // Obtém as dimensões do painel
-                        int panelWidth = size.width;
-                        int panelHeight = size.height;
 
                         // Ajuste de escala do SVG
                         double scaleX = 2.0f; // Ajusta a escala horizontal do SVG
                         double scaleY = 2.0f; // Ajusta a escala vertical do SVG
                         
-
-
-                         // Obtém as dimensões do SVG sem escala
-                        double svgWidth = svgNodeLogin.getPrimitiveBounds().getWidth();
-                        double svgHeight = svgNodeLogin.getPrimitiveBounds().getHeight();
-
-                        // Calcula o centro do SVG (no sistema de coordenadas do SVG)
-                        double svgCenterX = svgWidth / 2.0;
-                        double svgCenterY = svgHeight / 2.0;
-
-                        // Calcula o centro do painel
-                        double panelCenterX = panelWidth / 2.0;
-                        double panelCenterY = panelHeight / 2.0;
-
-                        // Calcula as coordenadas para centralizar o centro do SVG no centro do painel
-                        double translateX = panelCenterX - svgCenterX * scaleX;
-                        double translateY = panelCenterY - svgCenterY * scaleY;
-
-                        // Aplica a translação e escala
-                        g2d.translate(translateX, translateY); // Ajusta a posição considerando a escala
-                        g2d.scale(scaleX, scaleY); // Aplica a escala antes de desenhar
-                        svgNodeLogin.paint(g2d); // Desenha o SVG
-
+                        SVGUtils.paintCenteredSVG(g2d, svgNodeLogin, scaleX, scaleY, size.width, size.height);
                         g2d.dispose();
-
-
-
-                        // Obtém as dimensões do SVG após a escala
-                        ///double svgWidth = svgNodeLogin.getPrimitiveBounds().getWidth() * scaleX;
-                        ///double svgHeight = svgNodeLogin.getPrimitiveBounds().getHeight() * scaleY;
-                        // Calcula as cordenadas para centralizar o SVG
-                        ///double x = (panelWidth - svgWidth) / 2; // Calcula a posição central em relação ao tamanho do SVG escalado
-                        ///double y = (panelHeight - svgHeight) / 2;
-                        
-                        
-                        // Desenha o SVG no JPanel com ajuste de posição
-                        //g2d.translate(x, y); // Simples é direta
-                        //g2d.scale(scaleX, scaleY); // Aplica a escala antes de desenhar
-                        // Aplica a translação e escala
-                        ///g2d.translate(x / scaleX, y / scaleY); // Robusta e flexivel a diversos SVG
-                        ///g2d.scale(scaleX, scaleY); // Aplica a escala antes de desenhar
-                        ///svgNodeLogin.paint(g2d); // Desenha o SVG
-                        
-                        ///g2d.dispose();
                     }
                     
                 };
