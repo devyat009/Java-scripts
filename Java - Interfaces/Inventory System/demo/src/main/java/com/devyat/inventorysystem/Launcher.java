@@ -39,25 +39,6 @@ public class Launcher {
          */
         RoundedPanel uiLoginPainel = new RoundedPanel(45, 45, 45, 45, ColorPallete.white);
         uiLoginPainel.setPreferredSize(new Dimension(340, 410));
-
-
-        SwingUtilities.invokeLater(() -> {
-            try {
-                BufferedImage svgImage = SVGUtils.loadSVG(SVGUtils.SVGPaths.EXAMPLE, 200, 200);
-
-                JPanel panel = new JPanel() {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        g.drawImage(svgImage, 0, 0, this);
-                    }
-                };
-
-                uiBackground.add(panel);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     
         
         
