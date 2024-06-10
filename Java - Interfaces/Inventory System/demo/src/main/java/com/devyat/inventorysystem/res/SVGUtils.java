@@ -11,12 +11,12 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.io.IOException;
 import java.io.InputStream;
-// Java SWING Imports
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-// Batik Imports
+
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GVTBuilder;
