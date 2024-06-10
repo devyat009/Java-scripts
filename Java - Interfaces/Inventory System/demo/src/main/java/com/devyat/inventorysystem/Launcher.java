@@ -39,13 +39,13 @@ public class Launcher {
          * Background Panel witch goes on top of the window space
          */
         JPanel uiBackground = new JPanel(new GridBagLayout());
-        uiBackground.setBackground(ColorPallete.darkjunglegreen); // Cor de fundo do painel
+        uiBackground.setBackground(ColorPallete.DARK_JUNGLE_GREEN); // Cor de fundo do painel
         window.add(uiBackground, BorderLayout.CENTER);
 
         /*
          * UI Login Painel, allocates the login options
          */
-        RoundedPanel uiLoginPainel = new RoundedPanel(45, 45, 45, 45, ColorPallete.white);
+        RoundedPanel uiLoginPainel = new RoundedPanel(45, 45, 45, 45, ColorPallete.WHITE);
         uiLoginPainel.setPreferredSize(new Dimension(340, 410));
         uiLoginPainel.setLayout(new GridBagLayout());
         
@@ -97,13 +97,13 @@ public class Launcher {
         uxElements.Hover loginButton = new uxElements.Hover("Login");
         
         loginButton.setPreferredSize(new Dimension(120, 25)); // Define a preferred size
-        loginButton.setBackgroundAndForeground(ColorPallete.aliceBlue, ColorPallete.blue);
-        loginButton.setHoverBackgroundColor(ColorPallete.tRed); // Background color
-        loginButton.setHoverForegroundColor(ColorPallete.blue); // Text Color
+        loginButton.setBackgroundAndForeground(ColorPallete.ALICE_BLUE, ColorPallete.BLUE);
+        loginButton.setHoverBackgroundColor(ColorPallete.T_RED); // Background color
+        loginButton.setHoverForegroundColor(ColorPallete.BLUE); // Text Color
         loginButton.setPressedBackgroundColor(Color.PINK); // When button is pressed
         //loginButton.setBorder(BorderFactory.createEmptyBorder());
 
-        loginButton.setCustomBorder(ColorPallete.tPink,30, 30, 50, 10);
+        loginButton.setCustomBorder(ColorPallete.T_PINK,30, 30, 50, 10);
 
         uiGbc.gridx = 0;
         uiGbc.gridy = 2;
