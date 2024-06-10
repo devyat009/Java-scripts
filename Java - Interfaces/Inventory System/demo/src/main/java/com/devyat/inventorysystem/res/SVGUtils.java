@@ -38,17 +38,6 @@ import org.w3c.dom.svg.SVGDocument;
  *  - Auto Recenter
  *  - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
  */
-/*
- *  SVGUtils is class for customizing and adding svg files
- *    @devyat009
- *    @version 1.0
- *    @since 1.0
- *  - Indenpendent Resize in X and Y axis
- *  - Indenpendent Fill and Stroke color
- *  - Custom Stroke Thickness 
- *  - Auto Recenter
- *  - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
- */
 public class SVGUtils {
 
     // Caminhos para os arquivos SVG

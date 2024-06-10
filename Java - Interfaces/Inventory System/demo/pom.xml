@@ -159,22 +159,13 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-
     <dependencyManagement>
-    
-
         <dependencies>
-
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>batik-awt-util</artifactId>
                 <version>1.15</version>
             </dependency>
-
-        
-
-            
-
         </dependencies>
 
     </dependencyManagement>
