@@ -1,5 +1,5 @@
 package com.devyat.inventorysystem.res;
-
+// Java AWT Imports
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,12 +11,12 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.io.IOException;
 import java.io.InputStream;
-
+// Java SWING Imports
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-
+// Batik Imports
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.bridge.BridgeContext;
 import org.apache.batik.bridge.GVTBuilder;
@@ -53,9 +53,9 @@ public class SVGUtils {
 
     // Caminhos para os arquivos SVG
     public static class SVGPaths {
-        public static final String WARNING = "com/devyat/inventorysystem/res/images/warning.svg";
-        public static final String LOGOUT = "com/devyat/inventorysystem/res/images/logout.svg";
-        public static final String LOGIN = "com/devyat/inventorysystem/res/images/login.svg";
+        public static final String WARNING = "com/devyat/inventorysystem/res/icons/warning.svg";
+        public static final String LOGOUT = "com/devyat/inventorysystem/res/icons/logout.svg";
+        public static final String LOGIN = "com/devyat/inventorysystem/res/icons/login.svg";
     }
 
     // Método para carregar e colorir um arquivo SVG
