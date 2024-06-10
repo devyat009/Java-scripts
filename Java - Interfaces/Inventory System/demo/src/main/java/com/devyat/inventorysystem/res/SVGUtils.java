@@ -1,5 +1,5 @@
 package com.devyat.inventorysystem.res;
-// Java AWT Imports
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,19 +28,42 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
 
 /*
- *  SVGUtils is class for customizing and adding svg files
- *    @devyat009
- *    @version 1.0
- *    @since 1.0
- *  - Indenpendent Resize in X and Y axis
- *  - Indenpendent Fill and Stroke color
- *  - Custom Stroke Thickness 
- *  - Auto Recenter
- *  - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
+ * SVGUtils is class for customizing and adding svg files
+ * @devyat009
+ * - Indenpendent Resize in X and Y axis
+ * - Indenpendent Fill and Stroke color
+ * - Custom Stroke Thickness 
+ * - Auto Recenter
+ * - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
+ *  
+ * @version 1.1
+ * @since 1.0
+ */
+
+/**
+ * Utility class for loading, colorizing, scaling, and drawing SVG files.
+ *
+ * Usage example:
+ * <pre>{@code
+ * // Load and colorize the SVG
+ * GraphicsNode svgNodeLogin = SVGUtils.loadAndColorizeSVG(SVGUtils.SVGPaths.LOGIN, Color.CYAN, Color.CYAN, 2.0f);
+ *
+ * // Create a JPanel to draw the SVG
+ * JPanel svgPanel = SVGUtils.createSVGPanel(svgNodeLogin, 2.0, 2.0, 0, 0);
+ *
+ * // Set up a JFrame to display the panel
+ * JFrame frame = new JFrame("SVG Example");
+ * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ * frame.setSize(800, 400);
+ * frame.add(svgPanel);
+ * frame.setVisible(true);
+ * }</pre>
  */
 public class SVGUtils {
 
-    // Caminhos para os arquivos SVG
+    /**
+     * SVGPaths provides static paths to the SVG files used in the application.
+     */
     public static class SVGPaths {
         public static final String WARNING = "com/devyat/inventorysystem/res/icons/warning.svg";
         public static final String LOGOUT = "com/devyat/inventorysystem/res/icons/logout.svg";
@@ -48,6 +71,16 @@ public class SVGUtils {
     }
 
     // Método para carregar e colorir um arquivo SVG
+    /**
+     * Loads and colorizes an SVG file.
+     *
+     * @param svgPath    the path to the SVG file
+     * @param fillColor  the fill color to apply
+     * @param strokeColor the stroke color to apply
+     * @param strokeWidth the stroke width to apply
+     * @return a GraphicsNode representing the SVG
+     * @throws IOException if the SVG file cannot be loaded
+     */
     public static GraphicsNode loadAndColorizeSVG(String svgPath, Color fillColor, Color strokeColor, float strokeWidth) throws IOException {
         // Abre um fluxo de entrada para o arquivo SVG
         InputStream svgStream = SVGUtils.class.getClassLoader().getResourceAsStream(svgPath);
@@ -78,6 +111,14 @@ public class SVGUtils {
     }
 
     // Método para modificar a cor e a largura da linha do SVG
+    /**
+     * Modifies the color and stroke width of an SVG document.
+     *
+     * @param document    the SVG document to modify
+     * @param fillColor   the fill color to apply
+     * @param strokeColor the stroke color to apply
+     * @param strokeWidth the stroke width to apply
+     */
     private static void changeSVGColor(SVGDocument document, Color fillColor, Color strokeColor, float strokeWidth) {
         // Converte as cores para formato hexadecimal
         String fillHex = String.format("#%02x%02x%02x", fillColor.getRed(), fillColor.getGreen(), fillColor.getBlue());
@@ -108,40 +149,66 @@ public class SVGUtils {
             }
         }
     }
-    /*
-     * Method to draw the SVG always in the center of a JPanel.
+    /**
+     * Draws the SVG always in the center of a JPanel.
+     *
+     * @param g2d         the Graphics2D object to draw on
+     * @param svgNode     the SVG GraphicsNode to draw, the SVG File itself
+     * @param scaleX      the scale factor in the X direction of the SVG
+     * @param scaleY      the scale factor in the Y direction of the SVG
+     * @param panelWidth  the width of the panel of the JPanel
+     * @param panelHeight the height of the panel of the JPanel
+     * @param moveHorizontal change the SVG horizonal position after centered
+     * @param moveVertical change the SVG vertical position after centered
      */
-    public static void paintCenteredSVG(Graphics2D g2d, GraphicsNode svgNode, double scaleX, double scaleY, int panelWidth, int panelHeight) {
-        // Obtém as dimensões originais do SVG sem escala
+    public static void paintCenteredSVG(Graphics2D g2d, GraphicsNode svgNode, double scaleX, double scaleY, int panelWidth, int panelHeight, double moveHorizontal, double moveVertical) {
         double svgWidth = svgNode.getPrimitiveBounds().getWidth();
         double svgHeight = svgNode.getPrimitiveBounds().getHeight();
-
-        // Calcula o centro do SVG (no sistema de coordenadas do SVG)
         double svgCenterX = svgWidth / 2.0;
         double svgCenterY = svgHeight / 2.0;
-
-        // Calcula o centro do painel
         double panelCenterX = panelWidth / 2.0;
         double panelCenterY = panelHeight / 2.0;
+        double translateX = panelCenterX - svgCenterX * scaleX + moveHorizontal;
+        double translateY = panelCenterY - svgCenterY * scaleY + moveVertical;
 
-        // Calcula as coordenadas para centralizar o centro do SVG no centro do painel
-        double translateX = panelCenterX - svgCenterX * scaleX;
-        double translateY = panelCenterY - svgCenterY * scaleY;
+        g2d.translate(translateX, translateY);
+        g2d.scale(scaleX, scaleY);
+        svgNode.paint(g2d);
+    }
 
-        // Aplica a translação e escala
-        g2d.translate(translateX, translateY); // Ajusta a posição considerando a escala
-        g2d.scale(scaleX, scaleY); // Aplica a escala antes de desenhar
-        svgNode.paint(g2d); // Desenha o SVG
+    
+    /** 
+     * @param svgNode
+     * @param scaleX
+     * @param scaleY
+     * @param moveHorizontal
+     * @param moveVertical
+     * @return JPanel
+     */
+    // New method to create a JPanel that draws the SVG
+    public static JPanel createSVGPanel(GraphicsNode svgNode, double scaleX, double scaleY, double moveHorizontal, double moveVertical) {
+        return new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                Dimension size = getSize();
+                SVGUtils.paintCenteredSVG(g2d, svgNode, scaleX, scaleY, size.width, size.height, moveHorizontal, moveVertical);
+                g2d.dispose();
+            }
+        };
     }
 
     /**
-     * @param args
+     * The main method to launch the application.
+     * Will be removed in a near future
+     * @param args the command line arguments
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             // Cria uma janela Swing
             JFrame frame = new JFrame("QUACK 𓅭 QUACK");
-            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             frame.setSize(800, 400); // Aumentar o tamanho da janela para acomodar ambos os painéis
 
@@ -151,83 +218,12 @@ public class SVGUtils {
             frame.add(bground, BorderLayout.CENTER);
 
             try {
-                // Carrega o SVG "warning" e aplica cores e largura da linha
-                GraphicsNode svgNodeWarning = SVGUtils.loadAndColorizeSVG(SVGPaths.WARNING, Color.BLACK, Color.BLACK, 14.0f);
-
-                // Cria um JPanel para exibir o SVG "warning"
-                JPanel panel1 = new JPanel() {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        Graphics2D g2d = (Graphics2D) g.create();
-                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        // Calcula a escala para ajustar o SVG ao tamanho do painel
-                        float scaleX = 0.4f; // Ajusta a escala horizontal
-                        float scaleY = 0.4f; // Ajusta a escala vertical
-                        g2d.scale(scaleX, scaleY);
-                        // Desenha o SVG no JPanel com ajuste de posição
-                        int moveHorizontal = 0; // Mover no eixo horizontal
-                        int moveVertical = 0; // Mover no eixo vertical
-                        g2d.translate(moveHorizontal, moveVertical);
-                        svgNodeWarning.paint(g2d);
-                        g2d.dispose();
-                    }
-                };
-                panel1.setBackground(Color.WHITE);
-                panel1.setOpaque(true);
-                panel1.setPreferredSize(new Dimension(200, 200));
-
-                // Carrega o SVG "logout" e aplica cores e largura da linha
-                GraphicsNode svgNodeLogout = SVGUtils.loadAndColorizeSVG(SVGPaths.LOGOUT, Color.GREEN, Color.GREEN, 2.0f);
-
-                // Cria um JPanel para exibir o SVG "logout"
-                JPanel panel2 = new JPanel() {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        Graphics2D g2d = (Graphics2D) g.create();
-                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        // Calcula a escala para ajustar o SVG ao tamanho do painel
-                        float scaleX = 2.0f; // Ajusta a escala horizontal
-                        float scaleY = 2.0f; // Ajusta a escala vertical
-                        g2d.scale(scaleX, scaleY);
-                        // Desenha o SVG no JPanel com ajuste de posição
-                        int moveHorizontal = 0; // Mover no eixo horizontal
-                        int moveVertical = 0; // Mover no eixo vertical
-                        g2d.translate(moveHorizontal, moveVertical);
-                        svgNodeLogout.paint(g2d);
-                        g2d.dispose();
-                    }
-                };
-                panel2.setBackground(Color.WHITE);
-                panel2.setOpaque(true);
-                panel2.setPreferredSize(new Dimension(200, 200));
-
-
                 // Carrega o SVG "login" e aplica cores e largura da linha
-                GraphicsNode svgNodeLogin = SVGUtils.loadAndColorizeSVG(SVGPaths.LOGIN, Color.CYAN, Color.CYAN, 2.0f);
-                JPanel panel3 = new JPanel(){
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        Graphics2D g2d = (Graphics2D) g.create();
-                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        
-                        // Calcula a escala para ajustar o SVG ao tamanho do painel
-                        Dimension size = getSize();
-
-                        // Ajuste de escala do SVG
-                        double scaleX = 2.0f; // Ajusta a escala horizontal do SVG
-                        double scaleY = 2.0f; // Ajusta a escala vertical do SVG
-                        
-                        SVGUtils.paintCenteredSVG(g2d, svgNodeLogin, scaleX, scaleY, size.width, size.height);
-                        SVGUtils.paintCenteredSVG(g2d, svgNodeLogin, scaleX, scaleY, size.width, size.height);
-                        g2d.dispose();
-                    }
-                    
-                };
-                panel3.setBackground(Color.WHITE);
-                panel3.setPreferredSize(new Dimension(200, 200));
+                GraphicsNode svgNodeIconTest = SVGUtils.loadAndColorizeSVG(SVGPaths.LOGOUT, Color.RED, Color.RED, 2.0f);
+                JPanel iconTester = SVGUtils.createSVGPanel(svgNodeIconTest, 1.0, 1.0, 0, 0);
+                //iconTester.setBackground(new Color(255,255,255,255));
+                iconTester.setBackground(new Color(0,0,0,0));
+                iconTester.setPreferredSize(new Dimension(30, 30));
 
                 // Adiciona ambos os painéis ao fundo com restrições de layout
                 GridBagConstraints gbc = new GridBagConstraints();
@@ -235,17 +231,10 @@ public class SVGUtils {
                 gbc.gridx = 0;
                 gbc.gridy = 0;
                 gbc.insets = new Insets(5, 5, 5, 5);
-                bground.add(panel1, gbc);
-                // Adiciona o Painel 2 a Direita do Painel 1
-                gbc.gridx = 1;
-                bground.add(panel2, gbc);
-                // Adiciona o Painel 3 a Direita do Painel 2
-                gbc.gridx = 2;
-                bground.add(panel3, gbc);
+                bground.add(iconTester, gbc);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             frame.setVisible(true);
         });
     }
