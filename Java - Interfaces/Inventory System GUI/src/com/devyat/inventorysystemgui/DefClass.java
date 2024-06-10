@@ -46,8 +46,4 @@ public class DefClass {
     }
 
 
-    //final Hover btntest = new Hover("test");
-    //btntest.setBorder
-
-
 }
