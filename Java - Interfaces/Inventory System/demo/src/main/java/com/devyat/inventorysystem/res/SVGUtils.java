@@ -1,7 +1,5 @@
 package com.devyat.inventorysystem.res;
 
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,6 +15,7 @@ import java.io.InputStream;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.bridge.BridgeContext;
@@ -28,6 +27,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
 
+/*
+ *  SVGUtils is class for customizing and adding svg files
+ *    @devyat009
+ *    @version 1.0
+ *    @since 1.0
+ *  - Indenpendent Resize in X and Y axis
+ *  - Indenpendent Fill and Stroke color
+ *  - Custom Stroke Thickness 
+ *  - Auto Recenter
+ *  - Idependent position in X and Y axis. (Horizontal and Vertical) | WIP
+ */
 /*
  *  SVGUtils is class for customizing and adding svg files
  *    @devyat009
@@ -135,10 +145,14 @@ public class SVGUtils {
         svgNode.paint(g2d); // Desenha o SVG
     }
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             // Cria uma janela Swing
             JFrame frame = new JFrame("QUACK 𓅭 QUACK");
+            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             frame.setSize(800, 400); // Aumentar o tamanho da janela para acomodar ambos os painéis
 
@@ -217,6 +231,7 @@ public class SVGUtils {
                         double scaleX = 2.0f; // Ajusta a escala horizontal do SVG
                         double scaleY = 2.0f; // Ajusta a escala vertical do SVG
                         
+                        SVGUtils.paintCenteredSVG(g2d, svgNodeLogin, scaleX, scaleY, size.width, size.height);
                         SVGUtils.paintCenteredSVG(g2d, svgNodeLogin, scaleX, scaleY, size.width, size.height);
                         g2d.dispose();
                     }
