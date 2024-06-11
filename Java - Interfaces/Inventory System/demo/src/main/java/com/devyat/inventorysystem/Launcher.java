@@ -94,16 +94,16 @@ public class Launcher {
         uiLoginPainel.add(passwordField, uiGbc);
 
         // Login Button
-        uxElements.Hover loginButton = new uxElements.Hover("Login");
+        uxElements.Hover loginButton = new uxElements.Hover("Login", 20, 20,20,20, ColorPallete.T_GREEN);
         
         loginButton.setPreferredSize(new Dimension(120, 25)); // Define a preferred size
         loginButton.setBackgroundAndForeground(ColorPallete.ALICE_BLUE, ColorPallete.BLUE);
-        loginButton.setHoverBackgroundColor(ColorPallete.T_RED); // Background color
-        loginButton.setHoverForegroundColor(ColorPallete.BLUE); // Text Color
+        loginButton.setHoverBackgroundColor(ColorPallete.T_ORANGE); // Background color
+        loginButton.setHoverForegroundColor(ColorPallete.T_PINK); // Text Color
         loginButton.setPressedBackgroundColor(Color.PINK); // When button is pressed
-        //loginButton.setBorder(BorderFactory.createEmptyBorder());
+        loginButton.setBorder(BorderFactory.createEmptyBorder());
 
-        loginButton.setCustomBorder(ColorPallete.T_PINK,30, 30, 50, 10);
+        //loginButton.setCustomBorder(ColorPallete.T_PINK,10, 10, 10, 10);
 
         uiGbc.gridx = 0;
         uiGbc.gridy = 2;

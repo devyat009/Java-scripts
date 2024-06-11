@@ -210,7 +210,7 @@ public class SVGUtils {
             // Cria uma janela Swing
             JFrame frame = new JFrame("QUACK 𓅭 QUACK");
             frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            frame.setSize(800, 400); // Aumentar o tamanho da janela para acomodar ambos os painéis
+            frame.setSize(400, 400); // Aumentar o tamanho da janela para acomodar ambos os painéis
 
             // Cria um JPanel para o fundo com layout de grid
             JPanel bground = new JPanel(new GridBagLayout());
