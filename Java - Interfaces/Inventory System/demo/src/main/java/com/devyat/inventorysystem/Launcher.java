@@ -1,7 +1,6 @@
 package com.devyat.inventorysystem;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,7 +30,7 @@ public class Launcher {
          * The Window itself
          */
         window = new JFrame("Login");
-        window.setSize(1000, 600);
+        window.setSize(1366, 768);
         window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
 
@@ -45,28 +44,46 @@ public class Launcher {
         /*
          * UI Login Painel, allocates the login options
          */
-        RoundedPanel uiLoginPainel = new RoundedPanel(45, 45, 45, 45, ColorPallete.WHITE);
-        uiLoginPainel.setPreferredSize(new Dimension(340, 410));
+        RoundedPanel uiLoginPainel = new RoundedPanel(ColorPallete.WHITE);
+        uiLoginPainel.setPreferredSize(new Dimension(340, 400));
+        uiLoginPainel.setCornerRadius(45, 45, 45, 45);
         uiLoginPainel.setLayout(new GridBagLayout());
-        
         /*
-         * Configuração das restrições para centralizar o painel de login
+         * Configure the restrictions to centrelize the panel
          */
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.CENTER; // Centraliza o componente
+        gbc.fill = GridBagConstraints.CENTER; // Centralize the login panel 
         uiBackground.add(uiLoginPainel, gbc);
+
+        /*
+         * The title background of uiLoginPainel
+         */
+        RoundedPanel uiLoginPainelTitleBackground = new RoundedPanel(ColorPallete.BLUE);
+        uiLoginPainelTitleBackground.setPreferredSize(new Dimension(340, 51));
+        uiLoginPainelTitleBackground.setCornerRadius(40,40,0,0);
+        GridBagConstraints titleGbc = new GridBagConstraints();
+        titleGbc.gridx = 0;
+        titleGbc.gridy = 0;
+        // Add weight to make the panel go to the top of the page
+        titleGbc.weighty = 1.0;
+        titleGbc.gridwidth = 2; // Make the panel ocupy the entire uiLoginPanel
+        titleGbc.fill = GridBagConstraints.HORIZONTAL; // Expand in the horizontal axis
+        titleGbc.anchor = GridBagConstraints.NORTH;
+        titleGbc.insets = new Insets(0, 0, 0, 0); // Remove any spaces
+        uiLoginPainel.add(uiLoginPainelTitleBackground, titleGbc);
+        JLabel uiLoginPainelTitle = new JLabel("<html><font size=14><div style='text-align: center; margin-top: 10px;'><b>Login</b></div></font></html>");
+        uiLoginPainelTitleBackground.add(uiLoginPainelTitle);
 
         GridBagConstraints uiGbc = new GridBagConstraints();
         uiGbc.insets = new Insets(10, 10, 10, 10); // Padding
-
         // Username Label
         JLabel usernameLabel = new JLabel("Username:");
         uiGbc.gridx = 0;
-        uiGbc.gridy = 0;
+        uiGbc.gridy = 1;
         uiGbc.anchor = GridBagConstraints.WEST;
         uiLoginPainel.add(usernameLabel, uiGbc);
 
@@ -74,14 +91,14 @@ public class Launcher {
         usernameField = new JTextField(10);
         usernameField.setPreferredSize(new Dimension(50, 25)); // Define a preferred size
         uiGbc.gridx = 1;
-        uiGbc.gridy = 0;
+        uiGbc.gridy = 1;
         uiGbc.fill = GridBagConstraints.NONE; // Prevent horizontal expansion
         uiLoginPainel.add(usernameField, uiGbc);
 
         // Password Label
         JLabel passwordLabel = new JLabel("Password:");
         uiGbc.gridx = 0;
-        uiGbc.gridy = 1;
+        uiGbc.gridy = 2;
         uiGbc.fill = GridBagConstraints.NONE;
         uiLoginPainel.add(passwordLabel, uiGbc);
 
@@ -89,24 +106,23 @@ public class Launcher {
         passwordField = new JPasswordField(10);
         passwordField.setPreferredSize(new Dimension(50, 25)); // Define a preferred size
         uiGbc.gridx = 1;
-        uiGbc.gridy = 1;
+        uiGbc.gridy = 2;
         uiGbc.fill = GridBagConstraints.NONE; // Prevent horizontal expansion
         uiLoginPainel.add(passwordField, uiGbc);
 
         // Login Button
-        uxElements.Hover loginButton = new uxElements.Hover("Login", 20, 20,20,20, ColorPallete.T_GREEN);
-        
+        uxElements.Hover loginButton = new uxElements.Hover("<html><font size=4><div style='text-align: center; margin-left: 0px;'><b>Login</b></div></font></html>");
         loginButton.setPreferredSize(new Dimension(120, 25)); // Define a preferred size
-        loginButton.setBackgroundAndForeground(ColorPallete.ALICE_BLUE, ColorPallete.BLUE);
-        loginButton.setHoverBackgroundColor(ColorPallete.T_ORANGE); // Background color
+        loginButton.setBackgroundAndForeground(ColorPallete.BLUE, ColorPallete.WHITE);
+        loginButton.setHoverBackgroundColor(ColorPallete.GBORO); // Background color
         loginButton.setHoverForegroundColor(ColorPallete.T_PINK); // Text Color
-        loginButton.setPressedBackgroundColor(Color.PINK); // When button is pressed
-        loginButton.setBorder(BorderFactory.createEmptyBorder());
-
-        //loginButton.setCustomBorder(ColorPallete.T_PINK,10, 10, 10, 10);
+        loginButton.setPressedBackgroundColor(ColorPallete.DARK_JUNGLE_GREEN); // When button is pressed
+        loginButton.setCornerRadius(5,5,5,5);
+        loginButton.setBorder(BorderFactory.createEmptyBorder()); // Remove border lines
+        loginButton.setFocusable(false); // Remove the square lines when pressed
 
         uiGbc.gridx = 0;
-        uiGbc.gridy = 2;
+        uiGbc.gridy = 3;
         uiGbc.gridwidth = 2;
         uiGbc.fill = GridBagConstraints.NONE;
         uiGbc.anchor = GridBagConstraints.CENTER;

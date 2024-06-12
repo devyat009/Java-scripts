@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.geom.GeneralPath;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -39,12 +40,16 @@ public class uxElements {
     * 
     * Example usage:
     * <pre>{@code
-    * RoundedPanel panel = new RoundedPanel(20, 20, 20, 20, Color.PINK);
+    * RoundedPanel panel = new RoundedPanel(Color.PINK);
+    * panel.setCornerRadius(20,20,0,0) // Only top corners rounded
     * }</pre>
     */
     static class RoundedPanel extends JPanel {
-        private Color backgroundColor;
-        private int cornerRadiusTopLeft;
+        private final Color backgroundColor;
+        private double cornerRadiusTopLeft;
+        private double cornerRadiusTopRight;
+        private double cornerRadiusBottomLeft;
+        private double cornerRadiusBottomRight;
         
         /**
         * Constructor to create a panel with rounded corners.
@@ -55,10 +60,17 @@ public class uxElements {
         * @param bottomRight the radius of the bottom right corner
         * @param bgColor the background color of the panel
         */
-        public RoundedPanel(int topLeft, int topRight, int bottomLeft, int bottomRight, Color bgColor) {
-            cornerRadiusTopLeft = topLeft;
+        public RoundedPanel(Color bgColor) {
             backgroundColor = bgColor;
             setOpaque(false);
+        }
+
+        public void setCornerRadius(double topLeft, double topRight, double bottomLeft, double bottomRight) {
+            cornerRadiusTopLeft = topLeft;
+            cornerRadiusTopRight = topRight;
+            cornerRadiusBottomLeft = bottomLeft;
+            cornerRadiusBottomRight = bottomRight;
+            repaint(); // Re drawn the panel to reflect the radius change on borders
         }
     
         @Override
@@ -68,11 +80,25 @@ public class uxElements {
             int height = getHeight();
             Graphics2D graphics = (Graphics2D) g;
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    
-            // Draws the rounded panel with background color.
+
+            // Drawn the panel with rounded cornes with the background color
             if (backgroundColor != null) {
                 graphics.setColor(backgroundColor);
-                graphics.fillRoundRect(0, 0, width, height, cornerRadiusTopLeft, cornerRadiusTopLeft);
+                GeneralPath path = new GeneralPath();
+                // Move to topLeft and drawn a quadTo
+                path.moveTo(0, cornerRadiusTopLeft);
+                path.quadTo(0, 0, cornerRadiusTopLeft, 0);
+                // Drawn line to topLeft
+                path.lineTo(width - cornerRadiusTopRight, 0);
+                path.quadTo(width, 0, width, cornerRadiusTopRight);
+                // Drawn line to bottom right
+                path.lineTo(width, height - cornerRadiusBottomRight);
+                path.quadTo(width, height, width - cornerRadiusBottomRight, height);
+                // Drawn Line to bottom Left
+                path.lineTo(cornerRadiusBottomLeft, height);
+                path.quadTo(0, height, 0, height - cornerRadiusBottomLeft);
+                path.closePath();
+                graphics.fill(path);
             }
         }
     }
@@ -81,12 +107,12 @@ public class uxElements {
     * Custom rounded corner borders
     */
     static class RoundedBorder extends AbstractBorder {
-        private Color borderColor;
-        private int thickness;
-        private int cornerRadiusTopLeft;
-        private int cornerRadiusTopRight;
-        private int cornerRadiusBottomLeft;
-        private int cornerRadiusBottomRight;
+        private final Color borderColor;
+        private final int thickness;
+        private final int cornerRadiusTopLeft;
+        private final int cornerRadiusTopRight;
+        private final int cornerRadiusBottomLeft;
+        private final int cornerRadiusBottomRight;
 
         /**
         * Constructor to create a custom border with rounded corners.
@@ -155,11 +181,12 @@ public class uxElements {
     * 
     * Example usage:
     * <pre>{@code
-    * uxElements.Hover buttonName = new uxElements.Hover("buttonNameExample", 20, 20, 20, 20, Color.PINK);
+    * uxElements.Hover buttonName = new uxElements.Hover("buttonNameExample");
     * buttonName.setBackgroundAndForeground(ConsoleColors.darkjunglegreen, ConsoleColors.white);
     * buttonName.setHoverBackgroundColor(ConsoleColors.white);
     * buttonName.setHoverForegroundColor(Color.BLUE);
     * buttonName.setPressedBackgroundColor(Color.WHITE);
+    * buttonName.setCornerRadius(20,20,20,20); // topLeft, topRight, bottomLeft, bottomRight
     * }</pre>
     * 
     * @version 1.0
@@ -170,10 +197,11 @@ public class uxElements {
         private Color pressedBackgroundColor;
         private Color hoverForegroundColor;
         private Color backgroundColor;
-        private int cornerRadiusTopLeft;
-        private int cornerRadiusTopRight;
-        private int cornerRadiusBottomLeft;
-        private int cornerRadiusBottomRight;
+        private Color originalForegroundColor;
+        private double cornerRadiusTopLeft;
+        private double cornerRadiusTopRight;
+        private double cornerRadiusBottomLeft;
+        private double cornerRadiusBottomRight;
         
     
         /**
@@ -185,26 +213,21 @@ public class uxElements {
             super(text);
             super.setContentAreaFilled(false); // Prevent the default content area from being filled
         }
-    
         /**
-        * Constructor for creating a button with rounded corners.
-        * 
-        * @param text the text displayed on the button
-        * @param topLeft the radius for the top-left corner of the button
-        * @param topRight the radius for the top-right corner of the button
-        * @param bottomLeft the radius for the bottom-left corner of the button
-        * @param bottomRight the radius for the bottom-right corner of the button
-        * @param bgColor the background color of the button
+        * Sets the corner radius for each corner of the button.
+        *
+        * @param topLeft the radius for the top-left corner
+        * @param topRight the radius for the top-right corner
+        * @param bottomLeft the radius for the bottom-left corner
+        * @param bottomRight the radius for the bottom-right corner
         */
-        public Hover(String text, int topLeft, int topRight, int bottomLeft, int bottomRight, Color bgColor) {
-            this(text);
+        public void setCornerRadius(double topLeft, double topRight, double bottomLeft, double bottomRight) {
             this.cornerRadiusTopLeft = topLeft;
             this.cornerRadiusTopRight = topRight;
             this.cornerRadiusBottomLeft = bottomLeft;
             this.cornerRadiusBottomRight = bottomRight;
-            this.backgroundColor = bgColor;
         }
-    
+
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
@@ -218,16 +241,24 @@ public class uxElements {
                 setForeground(hoverForegroundColor);
             } else {
                 g2.setColor(backgroundColor != null ? backgroundColor : getBackground());
-                setForeground(getForeground());
+                setForeground(originalForegroundColor);
             }
 
             // Draw a custom rounded rectangle with different corner radii
             int width = getWidth();
             int height = getHeight();
-            g2.fillRoundRect(0, 0, width, height, cornerRadiusTopLeft, cornerRadiusTopLeft); // Top left corner
-            g2.fillRoundRect(0, 0, width, height, cornerRadiusTopRight, cornerRadiusTopRight); // Top right corner
-            g2.fillRoundRect(0, 0, width, height, cornerRadiusBottomLeft, cornerRadiusBottomLeft); // Bottom left corner
-            g2.fillRoundRect(0, 0, width, height, cornerRadiusBottomRight, cornerRadiusBottomRight); // Bottom right corner
+            GeneralPath path = new GeneralPath();
+            path.moveTo(0, cornerRadiusTopLeft);
+            path.quadTo(0, 0, cornerRadiusTopLeft, 0);
+            path.lineTo(width - cornerRadiusTopRight, 0);
+            path.quadTo(width, 0, width, cornerRadiusTopRight);
+            path.lineTo(width, height - cornerRadiusBottomRight);
+            path.quadTo(width, height, width - cornerRadiusBottomRight, height);
+            path.lineTo(cornerRadiusBottomLeft, height);
+            path.quadTo(0, height, 0, height - cornerRadiusBottomLeft);
+            path.closePath();
+            
+            g2.fill(path);
 
             super.paintComponent(g2);
             g2.dispose();
@@ -247,6 +278,7 @@ public class uxElements {
         public void setBackgroundAndForeground(Color background, Color foreground) {
             setBackground(background);
             setForeground(foreground);
+            originalForegroundColor = foreground; // Save for return the original color
         }
         /**
         * Gets the hover background color of the button.
