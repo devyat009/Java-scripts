@@ -1,6 +1,6 @@
 package com.devyat.inventorysystem.res;
 
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+//import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -136,10 +136,14 @@ public class SVGUtils {
     }
 
     public static void main(String[] args) {
+        System.setProperty("java.awt.headless", "true");
         SwingUtilities.invokeLater(() -> {
+
+            
+
             // Cria uma janela Swing
             JFrame frame = new JFrame("QUACK 𓅭 QUACK");
-            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 400); // Aumentar o tamanho da janela para acomodar ambos os painéis
 
             // Cria um JPanel para o fundo com layout de grid

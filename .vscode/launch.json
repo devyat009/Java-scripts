@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launcher",
+            "request": "launch",
+            "mainClass": "com.devyat.inventorysystem.Launcher",
+            "projectName": "InventorySystem"
+        },
+        {
+            "type": "java",
             "name": "SVGUtils",
             "request": "launch",
             "mainClass": "com.devyat.inventorysystem.res.SVGUtils",
