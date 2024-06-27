@@ -2,6 +2,8 @@ package com.devyat.inventorysystem;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -10,6 +12,8 @@ import java.awt.geom.GeneralPath;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 
@@ -31,7 +35,7 @@ import javax.swing.border.Border;
  * PT-BR | Classe responsável por abrigar códigos relacionados à customização de interface
  * EN    | This class is responsible to have some code related to interface customization
  */
-// I don't care about the CamelCase :) and doest need add a private constructor because the code servers the purpose to drawn interfaces.
+// I don't care about the CamelCase :) and doest need add a private constructor because the code serves the purpose to drawn interfaces.
 @SuppressWarnings({"java:S101", "java:S1118"}) 
 public class uxElements {
 
@@ -416,6 +420,142 @@ public class uxElements {
             public boolean isBorderOpaque() {
                 return false;
             }
+        }
+    }
+
+    /**
+     * Resposible to custumize the JTextField with borders thickness and colors.
+     */
+    static class uxcustomJTextField extends JTextField {
+        private Color lineColor = Color.BLACK;
+        private int topThickness = 0;
+        private int leftThickness = 0;
+        private int bottomThickness = 0;
+        private int rightThickness = 0;
+        
+        public void uxJTextFieldsetlineThickness(int top, int left, int bottom, int right) {
+            this.topThickness = top;
+            this.leftThickness = left;
+            this.bottomThickness = bottom;
+            this.rightThickness = right;
+            repaint(); // Used to repaint this component, if don't use it will not reflect any change.
+        }
+
+        public void uxJTextFieldsetlineColor(Color lineColor) {
+            this.lineColor = lineColor;
+            repaint();
+        }
+
+        public void uxJTextFieldSetColumns(int columns) {
+            FontMetrics fm = getFontMetrics(getFont());
+            int charWidth = fm.charWidth('W'); // Largura aproximada de um caractere 'W'
+            int fieldWidth = charWidth * columns + 6; // Adicionar uma margem para espaço extra
+            setPreferredSize(new Dimension(fieldWidth, getPreferredSize().height));
+        }
+
+        /**
+         * getInsets to change the Caret (| writing cursor), move 2 pixels away from the lines.
+        */
+        @Override
+        public Insets getInsets() {
+            return new Insets(topThickness+2, leftThickness+2, bottomThickness+2, rightThickness+2);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setColor(lineColor);
+
+            // Top border
+            if (topThickness > 0) {
+                g2.fillRect(0, 0, getWidth(), topThickness);
+            }
+
+            // Left border
+            if (leftThickness > 0) {
+                g2.fillRect(0, 0, leftThickness, getHeight());
+            }
+
+            // Bottom border
+            if (bottomThickness > 0) {
+                g2.fillRect(0, getHeight() - bottomThickness, getWidth(), bottomThickness);
+            }
+
+            // Right border
+            if (rightThickness > 0) {
+                g2.fillRect(getWidth() - rightThickness, 0, rightThickness, getHeight());
+            }
+
+            g2.dispose();
+        }
+    }
+
+    /*
+     * Resposible to custumize the JPasswordField with borders thickness and colors.
+     */
+    static class uxJPasswordField extends JPasswordField {
+        private Color lineColor = Color.BLACK;
+        private int topThickness = 0;
+        private int leftThickness = 0;
+        private int bottomThickness = 0;
+        private int rightThickness = 0;
+
+        public void uxJPasswordFieldsetlineThickness(int top, int left, int bottom, int right) {
+            this.topThickness = top;
+            this.leftThickness = left;
+            this.bottomThickness = bottom;
+            this.rightThickness = right;
+            repaint(); // Used to repaint this component, if don't use it will not reflect any change.
+        }
+
+        public void uxJPasswordFieldsetlineColor(Color lineColor) {
+            this.lineColor = lineColor;
+            repaint();
+        }
+
+        public void uxJPasswordldSetColumns(int columns) {
+            FontMetrics fm = getFontMetrics(getFont());
+            int charWidth = fm.charWidth('W'); // Largura aproximada de um caractere 'W'
+            int fieldWidth = charWidth * columns + 6; // Adicionar uma margem para espaço extra
+            setPreferredSize(new Dimension(fieldWidth, getPreferredSize().height));
+        }
+
+        /**
+         * getInsets to change the Caret (| writing cursor), move 2 pixels away from the lines.
+        */
+        @Override
+        public Insets getInsets() {
+            return new Insets(topThickness+2, leftThickness+2, bottomThickness+2, rightThickness+2);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setColor(lineColor);
+
+            // Top border
+            if (topThickness > 0) {
+                g2.fillRect(0, 0, getWidth(), topThickness);
+            }
+
+            // Left border
+            if (leftThickness > 0) {
+                g2.fillRect(0, 0, leftThickness, getHeight());
+            }
+
+            // Bottom border
+            if (bottomThickness > 0) {
+                g2.fillRect(0, getHeight() - bottomThickness, getWidth(), bottomThickness);
+            }
+
+            // Right border
+            if (rightThickness > 0) {
+                g2.fillRect(getWidth() - rightThickness, 0, rightThickness, getHeight());
+            }
+
+            g2.dispose();
         }
     }
 }

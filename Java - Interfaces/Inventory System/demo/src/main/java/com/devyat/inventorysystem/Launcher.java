@@ -14,22 +14,24 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.border.EmptyBorder;
 
 import com.devyat.inventorysystem.res.ColorPallete;
 import com.devyat.inventorysystem.uxElements.RoundedPanel;
+import com.devyat.inventorysystem.uxElements.uxcustomJTextField;
 
 public class Launcher {
     private JFrame window;
-    private JTextField usernameField;
+    //private JTextField usernameField;
+    private uxcustomJTextField usernameField;
     private JPasswordField passwordField;
 
     public Launcher() {
         /*
          * The Window itself
          */
-        window = new JFrame("Login");
+        window = new JFrame("System Inventory");
         window.setSize(1366, 768);
         window.setDefaultCloseOperation(EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
@@ -75,6 +77,7 @@ public class Launcher {
         titleGbc.anchor = GridBagConstraints.NORTH;
         titleGbc.insets = new Insets(0, 0, 0, 0); // Remove any spaces
         uiLoginPainel.add(uiLoginPainelTitleBackground, titleGbc);
+
         JLabel uiLoginPainelTitle = new JLabel("<html><font size=14><div style='text-align: center; margin-top: 10px;'><b>Login</b></div></font></html>");
         uiLoginPainelTitleBackground.add(uiLoginPainelTitle);
 
@@ -86,10 +89,13 @@ public class Launcher {
         uiGbc.gridy = 1;
         uiGbc.anchor = GridBagConstraints.WEST;
         uiLoginPainel.add(usernameLabel, uiGbc);
-
-        // Username Field
-        usernameField = new JTextField(10);
-        usernameField.setPreferredSize(new Dimension(50, 25)); // Define a preferred size
+        
+        uxElements.uxcustomJTextField usernameField = new uxElements.uxcustomJTextField();
+        usernameField.uxJTextFieldsetlineColor(ColorPallete.T_RED);
+        usernameField.uxJTextFieldsetlineThickness(0, 0, 2, 0);
+        usernameField.uxJTextFieldSetColumns(10);
+        usernameField.setBorder(new EmptyBorder(0, 0, 0, 0));
+        usernameField.setPreferredSize(new Dimension(100, 25));
         uiGbc.gridx = 1;
         uiGbc.gridy = 1;
         uiGbc.fill = GridBagConstraints.NONE; // Prevent horizontal expansion
@@ -102,9 +108,12 @@ public class Launcher {
         uiGbc.fill = GridBagConstraints.NONE;
         uiLoginPainel.add(passwordLabel, uiGbc);
 
-        // Password Field
-        passwordField = new JPasswordField(10);
-        passwordField.setPreferredSize(new Dimension(50, 25)); // Define a preferred size
+        uxElements.uxJPasswordField passwordField = new uxElements.uxJPasswordField();
+        passwordField.uxJPasswordFieldsetlineColor(ColorPallete.T_ORANGE);
+        passwordField.uxJPasswordFieldsetlineThickness(0, 0,2,0);
+        passwordField.uxJPasswordldSetColumns(10);
+        passwordField.setBorder(new EmptyBorder(0, 0, 0, 0));
+        passwordField.setPreferredSize(new Dimension(100, 25));
         uiGbc.gridx = 1;
         uiGbc.gridy = 2;
         uiGbc.fill = GridBagConstraints.NONE; // Prevent horizontal expansion
