@@ -1,6 +1,7 @@
 package com.devyat.inventorysystem;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,8 +20,15 @@ import javax.swing.border.EmptyBorder;
 
 import com.devyat.inventorysystem.res.ColorPallete;
 import com.devyat.inventorysystem.uxElements.RoundedPanel;
+import com.devyat.inventorysystem.uxElements.uxJPasswordField;
 import com.devyat.inventorysystem.uxElements.uxcustomJTextField;
 
+/**
+ * The launcher of the program, allocates the login panel.
+ * @devyat009
+ * @version 1.3
+ * @since 1.0
+ */
 public class Launcher {
     private JFrame window;
     //private JTextField usernameField;
@@ -40,7 +48,7 @@ public class Launcher {
          * Background Panel witch goes on top of the window space
          */
         JPanel uiBackground = new JPanel(new GridBagLayout());
-        uiBackground.setBackground(ColorPallete.DARK_JUNGLE_GREEN); // Cor de fundo do painel
+        uiBackground.setBackground(ColorPallete.DARK_JUNGLE_GREEN); // Background panel color.
         window.add(uiBackground, BorderLayout.CENTER);
 
         /*
@@ -80,44 +88,9 @@ public class Launcher {
 
         JLabel uiLoginPainelTitle = new JLabel("<html><font size=14><div style='text-align: center; margin-top: 10px;'><b>Login</b></div></font></html>");
         uiLoginPainelTitleBackground.add(uiLoginPainelTitle);
-
-        GridBagConstraints uiGbc = new GridBagConstraints();
-        uiGbc.insets = new Insets(10, 10, 10, 10); // Padding
-        // Username Label
-        JLabel usernameLabel = new JLabel("Username:");
-        uiGbc.gridx = 0;
-        uiGbc.gridy = 1;
-        uiGbc.anchor = GridBagConstraints.WEST;
-        uiLoginPainel.add(usernameLabel, uiGbc);
-        
-        uxElements.uxcustomJTextField usernameField = new uxElements.uxcustomJTextField();
-        usernameField.uxJTextFieldsetlineColor(ColorPallete.T_RED);
-        usernameField.uxJTextFieldsetlineThickness(0, 0, 2, 0);
-        usernameField.uxJTextFieldSetColumns(10);
-        usernameField.setBorder(new EmptyBorder(0, 0, 0, 0));
-        usernameField.setPreferredSize(new Dimension(100, 25));
-        uiGbc.gridx = 1;
-        uiGbc.gridy = 1;
-        uiGbc.fill = GridBagConstraints.NONE; // Prevent horizontal expansion
-        uiLoginPainel.add(usernameField, uiGbc);
-
-        // Password Label
-        JLabel passwordLabel = new JLabel("Password:");
-        uiGbc.gridx = 0;
-        uiGbc.gridy = 2;
-        uiGbc.fill = GridBagConstraints.NONE;
-        uiLoginPainel.add(passwordLabel, uiGbc);
-
-        uxElements.uxJPasswordField passwordField = new uxElements.uxJPasswordField();
-        passwordField.uxJPasswordFieldsetlineColor(ColorPallete.T_ORANGE);
-        passwordField.uxJPasswordFieldsetlineThickness(0, 0,2,0);
-        passwordField.uxJPasswordldSetColumns(10);
-        passwordField.setBorder(new EmptyBorder(0, 0, 0, 0));
-        passwordField.setPreferredSize(new Dimension(100, 25));
-        uiGbc.gridx = 1;
-        uiGbc.gridy = 2;
-        uiGbc.fill = GridBagConstraints.NONE; // Prevent horizontal expansion
-        uiLoginPainel.add(passwordField, uiGbc);
+    
+        // Username and Login fields
+        addComponents(uiLoginPainel);
 
         // Login Button
         uxElements.Hover loginButton = new uxElements.Hover("<html><font size=4><div style='text-align: center; margin-left: 0px;'><b>Login</b></div></font></html>");
@@ -130,20 +103,19 @@ public class Launcher {
         loginButton.setBorder(BorderFactory.createEmptyBorder()); // Remove border lines
         loginButton.setFocusable(false); // Remove the square lines when pressed
 
-        uiGbc.gridx = 0;
-        uiGbc.gridy = 3;
-        uiGbc.gridwidth = 2;
-        uiGbc.fill = GridBagConstraints.NONE;
-        uiGbc.anchor = GridBagConstraints.CENTER;
-        uiLoginPainel.add(loginButton, uiGbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 10;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        uiLoginPainel.add(loginButton, gbc);
 
         // Event listener for the login button
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (authenticate(usernameField.getText(), new String(passwordField.getPassword()))) {
-                    window.setVisible(false); // Hide the login window
-                    //Main main = new Main(); // Create an instance of the Main class
-                    //main.showhomePainel(); // Show the main window
+                    window.setVisible(false);
+                    // Logic to the next windown. (WIP)
                 } else {
                     JOptionPane.showMessageDialog(window, "Login failed", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -154,6 +126,78 @@ public class Launcher {
     private boolean authenticate(String username, String password) {
         // Replace this with your real authentication logic
         return "123".equals(username) && "123".equals(password);
+    }
+    /**
+     * Layout organizer.
+     * @param panel
+     * @param component
+     * @param gbc
+     * @param gridx
+     * @param gridy
+     */
+    private void addComponent(JPanel panel, Component component, GridBagConstraints gbc, int gridx, int gridy) {
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        panel.add(component, gbc);
+    }
+
+    /**
+     * Component layout manager.
+     * @param panelOfChoice the panel choosed to add the components.
+     * @version 1.0
+     * @since 
+     */
+    private void addComponents(JPanel panelOfChoice) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Padding, distances betwen itens.
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.0; 
+
+        RoundedPanel usernamePanel = createUsernameC();
+        addComponent(panelOfChoice, usernamePanel, gbc, 1, 0);
+
+        RoundedPanel passwordPanel = createPasswordC();
+        addComponent(panelOfChoice, passwordPanel, gbc, 1, 1);
+    }
+
+    /**
+     * Username label and customizable JTextField field.
+     * @return usernamePanel - The panel with the itens.
+     * @version 1.0 - First design
+     */
+    private RoundedPanel createUsernameC() {
+        RoundedPanel usernamePanel = new RoundedPanel(ColorPallete.D_GRAY);
+        usernamePanel.setCornerRadius(10, 10, 10, 10); // Add corners.
+        JLabel usernameLabel = new JLabel("Username:");
+        uxcustomJTextField usernameField = new uxcustomJTextField();
+        usernameField.uxJTextFieldsetlineColor(ColorPallete.T_RED); // Color of the line.
+        usernameField.uxJTextFieldsetlineThickness(0, 0, 2, 0); // Witch lines show up.
+        usernameField.uxJTextFieldSetColumns(10); // Set space of the text field.
+        usernameField.setBorder(new EmptyBorder(0, 0, 0, 0)); // No border.
+        usernameField.setPreferredSize(new Dimension(100, 25)); // Set size.
+        usernamePanel.add(usernameLabel);
+        usernamePanel.add(usernameField);
+        return usernamePanel;
+    }
+
+    /**
+     * Password label and customizable PasswordField field.
+     * @return passwordPanel - The panel with itens.
+     * @version 1.0 - First design.
+     */
+    private RoundedPanel createPasswordC() {
+        RoundedPanel passwordPanel = new RoundedPanel(ColorPallete.ALICE_BLUE);
+        passwordPanel.setCornerRadius(10, 10, 10, 10);
+        JLabel passwordLabel = new JLabel("Password:");
+        uxJPasswordField passwordField = new uxJPasswordField();
+        passwordField.uxJPasswordFieldsetlineColor(ColorPallete.T_ORANGE); // Color of the line
+        passwordField.uxJPasswordFieldsetlineThickness(0, 0, 2, 0); // Witch lines show up
+        passwordField.uxJPasswordldSetColumns(10); // Set space of the text field
+        passwordField.setBorder(new EmptyBorder(0, 0, 0, 0)); // No border
+        passwordField.setPreferredSize(new Dimension(100, 25)); // Set size
+        passwordPanel.add(passwordLabel);
+        passwordPanel.add(passwordField);
+        return passwordPanel;
     }
 
     public void show() {
