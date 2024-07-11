@@ -6,10 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "com.devyat.inventorysystem.Test",
+            "projectName": "demo"
+        },
+        {
+            "type": "java",
             "name": "Launcher",
             "request": "launch",
             "mainClass": "com.devyat.inventorysystem.Launcher",
-            "projectName": "demo"
+            "projectName": "demo",
+            "noDebug": false,
+            "__progressId": "98f34142-c41c-4a7a-804b-fc76eabf99ea",
+            "__origin": "internal"
         },
         {
             "type": "java",
